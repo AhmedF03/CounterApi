@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 public class ApiController {
 
-    //Request body gets the body need to be same type, then use get
+    // Request body gets the body need to be same type, then use get
     // Postconstruct to initialize the dictionary before starting requests
 
     //Dictionnary using Map, <String,Int>
@@ -29,54 +29,55 @@ public class ApiController {
 
     // Gets all the counters
     @GetMapping("/Counters/")
-    public ResponseEntity<String> getCounters() {
-        return new ResponseEntity<>(dictionary.toString(), HttpStatus.OK);
+    public ResponseEntity<Map<String, Integer>> getCounters() {
+        return new ResponseEntity<>(dictionary, HttpStatus.OK);
     }
     //Create a new counter with initial value
     @PostMapping("/Counters")
-    public ResponseEntity<String> createCounter(@RequestBody Map<String, Integer> request) {
+    public ResponseEntity<Map<String, Integer>> createCounter(@RequestBody Map<String, Integer> request) {
         int size = dictionary.size();
         String counterName = "counter"+size;
         dictionary.put(counterName, request.get("initialValue"));
-        return new ResponseEntity<>(dictionary.toString(), HttpStatus.OK);
+        return new ResponseEntity<>(dictionary, HttpStatus.OK);
     }
     // increment counter by counter name
     @PutMapping("/Counters/{counterName}")
-    public ResponseEntity<String> incrementCounter(@PathVariable String counterName) {
+    public ResponseEntity<Map<String, Integer>> incrementCounter(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
             dictionary.put(counterName, dictionary.get(counterName)+1);
-            return new ResponseEntity<>(dictionary.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(dictionary, HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>("404 Not found", HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     //Decrement counter by counter name
     @DeleteMapping("/Counters/{counterName}")
-    public ResponseEntity<String> decrementCounter(@PathVariable String counterName) {
+    public ResponseEntity<Map<String, Integer>> decrementCounter(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
             if (dictionary.get(counterName) ==0) {
                 dictionary.remove(counterName);
-                return new ResponseEntity<>("404 Not found", HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             else {
                 dictionary.put(counterName, dictionary.get(counterName)-1);
-                return new ResponseEntity<>(dictionary.toString(), HttpStatus.OK);
+                return new ResponseEntity<>(dictionary, HttpStatus.OK);
             }
         }
         else {
-            return new ResponseEntity<>("404 Not found", HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     // Gets value of counter
     @GetMapping("/Counters/{counterName}")
-    public ResponseEntity<String> getCounterName(@PathVariable String counterName) {
+    public ResponseEntity<Map<String, Integer>> getCounterName(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
-            return new ResponseEntity<>("{" + counterName + ": " + dictionary.get(counterName) + "}"
-                    , HttpStatus.OK);
+            Map<String,Integer> counter = new HashMap<>();
+            counter.put(counterName,dictionary.get(counterName));
+            return new ResponseEntity<>(counter, HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>("404 Not found", HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
