@@ -36,8 +36,17 @@ class ApiControllerTest {
     }
 
     @Test
-    void createCounter() {
+    void createCounter() throws Exception {
+        String initialValue = "{\"initialValue\":10}";
+        mockMvc.perform(post("/Counters")
+                .contentType(MediaType.APPLICATION_JSON)    // content type will be json
+                .content(initialValue)) // write in body
+                .andExpect(status().isOk());
 
+
+        mockMvc.perform(get("/Counters/").contentType(MediaType.APPLICATION_JSON))
+                 .andExpect(status().isOk())
+                 .andExpect(jsonPath("$.counter2").value(10));
     }
 
     @Test
