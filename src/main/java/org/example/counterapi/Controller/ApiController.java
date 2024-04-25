@@ -70,7 +70,7 @@ public class ApiController {
     }
     // Gets value of counter
     @GetMapping("/Counters/{counterName}")
-    public ResponseEntity<Map<String, Integer>> getCounterName(@PathVariable String counterName) {
+    public ResponseEntity<Map<String, Integer>> getCounterValue(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
             Map<String,Integer> counter = new HashMap<>();
             counter.put(counterName,dictionary.get(counterName));

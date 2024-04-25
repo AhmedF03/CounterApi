@@ -52,14 +52,32 @@ class ApiControllerTest {
 
     @Test
     void decrementCounter() throws Exception {
+        // bigger than one
         mockMvc.perform(delete("/Counters/abc").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.abc").value(4));
+        // equals to one
         mockMvc.perform(delete("/Counters/xyz").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        // does not exist
+        mockMvc.perform(delete("/Counters/whatever").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void getCounterName() {
+    void getCounterValue() throws Exception {
+        // get abc
+        mockMvc.perform(get("/Counters/abc").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.abc").value(5));
+
+        //get xyz
+        mockMvc.perform(get("/Counters/xyz").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.xyz").value(1));
+
+        // get a counter that does not exist
+        mockMvc.perform(get("/Counters/whatever").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
