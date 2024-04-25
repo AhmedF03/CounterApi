@@ -18,7 +18,7 @@ public class ApiController {
     // Postconstruct to initialize the dictionary before starting requests
 
     //Dictionnary using Map, <String,Int>
-    Map<String,Integer> dictionary = new HashMap<>();
+    static Map<String,Integer> dictionary = new HashMap<>();
 
     //adds values in dictionary
     @PostConstruct
@@ -55,7 +55,7 @@ public class ApiController {
     @DeleteMapping("/Counters/{counterName}")
     public ResponseEntity<Map<String, Integer>> decrementCounter(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
-            if (dictionary.get(counterName) ==0) {
+            if (dictionary.get(counterName) ==1) {
                 dictionary.remove(counterName);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
