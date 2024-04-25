@@ -35,9 +35,17 @@ public class ApiController {
     //Create a new counter with initial value
     @PostMapping("/Counters")
     public ResponseEntity<Map<String, Integer>> createCounter(@RequestBody Map<String, Integer> request) {
-        int size = dictionary.size();
-        String counterName = "counter"+(size-1);
-        dictionary.put(counterName, request.get("initialValue"));
+        // what if it's not named initial value?
+        //dictionary.put("initialValue", request.get("initialValue"));
+        //request has the body in a Map type
+        if (!request.isEmpty()) {
+            Map.Entry<String,Integer> entry = request.entrySet().iterator().next();
+            dictionary.put(entry.getKey(),entry.getValue());
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(dictionary, HttpStatus.OK);
     }
     // increment counter by counter name

@@ -45,7 +45,7 @@ class ApiControllerTest {
 
         mockMvc.perform(get("/Counters/").contentType(MediaType.APPLICATION_JSON))
                  .andExpect(status().isOk())
-                 .andExpect(jsonPath("$.counter1").value(10));
+                 .andExpect(jsonPath("$.initialValue").value(10));
     }
 
     @Test
