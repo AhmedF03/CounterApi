@@ -21,7 +21,6 @@ class ApiControllerTest {
 
     @BeforeEach
     public void setup() {
-
         ApiController.dictionary.clear();
         ApiController.dictionary.put("abc", 5);
         ApiController.dictionary.put("xyz", 1);
@@ -46,7 +45,7 @@ class ApiControllerTest {
 
         mockMvc.perform(get("/Counters/").contentType(MediaType.APPLICATION_JSON))
                  .andExpect(status().isOk())
-                 .andExpect(jsonPath("$.counter2").value(10));
+                 .andExpect(jsonPath("$.counter1").value(10));
     }
 
     @Test

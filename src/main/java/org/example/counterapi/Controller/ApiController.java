@@ -36,7 +36,7 @@ public class ApiController {
     @PostMapping("/Counters")
     public ResponseEntity<Map<String, Integer>> createCounter(@RequestBody Map<String, Integer> request) {
         int size = dictionary.size();
-        String counterName = "counter"+size;
+        String counterName = "counter"+(size-1);
         dictionary.put(counterName, request.get("initialValue"));
         return new ResponseEntity<>(dictionary, HttpStatus.OK);
     }
