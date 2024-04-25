@@ -13,6 +13,10 @@ import java.util.Map;
 
 @RestController
 public class ApiController {
+
+    //Request body gets the body need to be same type, then use get
+    // Postconstruct to initialize the dictionary before starting requests
+
     //Dictionnary using Map, <String,Int>
     Map<String,Integer> dictionary = new HashMap<>();
 
@@ -23,18 +27,20 @@ public class ApiController {
         dictionary.put("xyz",3);
     }
 
+    // Gets all the counters
     @GetMapping("/Counters/")
     public ResponseEntity<String> getCounters() {
         return new ResponseEntity<>(dictionary.toString(), HttpStatus.OK);
     }
+    //Create a new counter with initial value
     @PostMapping("/Counters")
-    public ResponseEntity<String> getCounters(@RequestParam int initialValue) {
+    public ResponseEntity<String> createCounter(@RequestBody Map<String, Integer> request) {
         int size = dictionary.size();
         String counterName = "counter"+size;
-        dictionary.put(counterName,initialValue);
+        dictionary.put(counterName, request.get("initialValue"));
         return new ResponseEntity<>(dictionary.toString(), HttpStatus.OK);
     }
-
+    // increment counter by counter name
     @PutMapping("/Counters/{counterName}")
     public ResponseEntity<String> incrementCounter(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
@@ -45,9 +51,9 @@ public class ApiController {
             return new ResponseEntity<>("404 Not found", HttpStatus.OK);
         }
     }
-
+    //Decrement counter by counter name
     @DeleteMapping("/Counters/{counterName}")
-    public ResponseEntity<String> decrement(@PathVariable String counterName) {
+    public ResponseEntity<String> decrementCounter(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
             if (dictionary.get(counterName) ==0) {
                 dictionary.remove(counterName);
@@ -62,6 +68,7 @@ public class ApiController {
             return new ResponseEntity<>("404 Not found", HttpStatus.OK);
         }
     }
+    // Gets value of counter
     @GetMapping("/Counters/{counterName}")
     public ResponseEntity<String> getCounterName(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
