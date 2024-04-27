@@ -63,7 +63,7 @@ public class ApiController {
     @DeleteMapping("/Counters/{counterName}")
     public ResponseEntity<Map<String, Integer>> decrementCounter(@PathVariable String counterName) {
         if (dictionary.containsKey(counterName)) {
-            if (dictionary.get(counterName) ==1) {
+            if (dictionary.get(counterName) <=0) {
                 dictionary.remove(counterName);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
