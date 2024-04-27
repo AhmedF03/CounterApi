@@ -66,7 +66,12 @@ class ApiControllerTest {
                 .andExpect(jsonPath("$.abc").value(4));
         // equals to one
         mockMvc.perform(delete("/Counters/xyz").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.xyz").value(0));
+        // <=0
+        mockMvc.perform(delete("/Counters/xyz").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+
         // does not exist
         mockMvc.perform(delete("/Counters/whatever").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
