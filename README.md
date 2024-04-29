@@ -1,5 +1,6 @@
 # Counter API
 
+Deployed the Api to the cloud with GCP
 https://burnished-attic-421600.nn.r.appspot.com/Counters/ 
 
 ## Overview
@@ -19,3 +20,6 @@ This Counter API is a Spring Boot application designed to manage a simple set of
 - `PUT /Counters/{counterName}`: Increments the counter specified by `counterName`.
 - `DELETE /Counters/{counterName}`: Decrements the counter specified by `counterName` or removes it if its value is 0 or less.
 - `GET /Counters/{counterName}`: Retrieves the current value of the counter specified by `counterName`.
+  
+## Unit Tests
+Unit tests are available in ApiControllerTest.java
