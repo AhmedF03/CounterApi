@@ -7,7 +7,6 @@ https://burnished-attic-421600.nn.r.appspot.com/Counters/
 This Counter API is a Spring Boot application designed to manage a simple set of counters, allowing users to create, retrieve, increment, and decrement named counters.
 
 ## Features
-- **Initialize Counters**: Upon application startup, pre-defined counters are initialized.
 - **Get All Counters**: Retrieve a map of all counters and their current values.
 - **Create a New Counter**: Add a new counter with a specific initial value.
 - **Increment a Counter**: Increase the value of a specific counter by 1.
